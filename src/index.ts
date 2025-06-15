@@ -5,10 +5,12 @@ import manifest from '__STATIC_CONTENT_MANIFEST'
 import * as local from "hono/cookie";
 import * as oneui from './oneui';
 import * as aliui from './aliui';
+import * as aliui2 from './aliui2';
 import * as ui115 from './115ui';
 import * as ui123 from './123ui';
 import * as baidu from './baidu';
 import * as goapi from './goapi';
+import * as yandex from './yandex';
 
 export type Bindings = {
     MAIN_URLS: string, baiduyun_ext: string,
@@ -17,7 +19,9 @@ export type Bindings = {
     baiduyun_uid: string, baiduyun_key: string,
     cloud115_uid: string, cloud115_key: string,
     googleui_uid: string, googleui_key: string,
+    YANDEX_CLIENT_ID: string, YANDEX_CLIENT_SECRET: string,
 }
+
 const app = new Hono<{ Bindings: Bindings }>()
 app.use("*", serveStatic({manifest: manifest, root: "./"}));
 
@@ -38,6 +42,26 @@ app.get('/alicloud/requests', async (c: Context) => {
 // 令牌申请 ##############################################################################
 app.get('/alicloud/callback', async (c: Context) => {
     return aliui.alyToken(c);
+});
+
+// 阿里云盘扫码2 - 生成二维码 ##############################################################################
+app.get('/alicloud2/generate_qr', async (c: Context) => {
+    return aliui2.generateQR(c);
+});
+
+// 阿里云盘扫码2 - 检查登录状态 ##############################################################################
+app.get('/alicloud2/check_login', async (c: Context) => {
+    return aliui2.checkLogin(c);
+});
+
+// 阿里云盘扫码2 - 获取用户信息 ##############################################################################
+app.get('/alicloud2/get_user_info', async (c: Context) => {
+    return aliui2.getUserInfo(c);
+});
+
+// 阿里云盘扫码2 - 退出登录 ##############################################################################
+app.get('/alicloud2/logout', async (c: Context) => {
+    return aliui2.logout(c);
 });
 
 // 登录申请 ##############################################################################
@@ -80,5 +104,8 @@ app.get('/googleui/callback', async (c: Context) => {
     return goapi.oneToken(c);
 });
 
+app.get('/yandex/requests', async (c: Context) => {return yandex.yandexLogin(c)});
+
+app.get('/yandex/callback', async (c: Context) => {return yandex.yandexCallBack(c)});
 
 export default app
