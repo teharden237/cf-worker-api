@@ -7,7 +7,7 @@
     "nodejs_compat"
   ],
   "vars": {
-    "MAIN_URLS": "api.oplist.org",
+    "MAIN_URLS": "openlist-api.teharden.org",
     "onedrive_uid": "",
     "onedrive_key": "",
     "alicloud_uid": "",
