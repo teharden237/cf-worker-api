@@ -12,7 +12,7 @@ export function getInfo(c: Context): Clients | undefined {
     const client_uid: string | undefined = c.req.query('client_uid');
     const client_key: string | undefined = c.req.query('client_key');
     const secret_key: string | undefined = c.req.query('secret_key');
-    const driver_txt: string | undefined = c.req.query('apps_types');
+    const driver_txt: string | undefined = c.req.query('driver_txt');
     const server_use: string | undefined = c.req.query('server_use');
     if (!server_use || server_use === "false")
         if (!driver_txt || !client_key)
